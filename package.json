@@ -1,7 +1,7 @@
 {
-  "name": "pandora-boilerplate",
-  "version": "1.1.6",
-  "description": "An HTML Boilerplate to start a project.",
+  "name": "weather",
+  "version": "0.1.0",
+  "description": "Weather page: the expanded view of the desktop bar weather dropdown.",
   "main": "source/index.html",
   "scripts": {
     "dev": "vite",
@@ -12,17 +12,16 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mikem33/pandora-boilerplate.git"
+    "url": "git+https://github.com/mikem33/weather.git"
   },
   "keywords": [
-    "html5",
-    "boilerplate",
-    "pandora"
+    "weather",
+    "open-meteo"
   ],
   "bugs": {
-    "url": "https://github.com/mikem33/pandora-boilerplate/issues"
+    "url": "https://github.com/mikem33/weather/issues"
   },
-  "homepage": "https://github.com/mikem33/pandora-boilerplate",
+  "homepage": "https://github.com/mikem33/weather",
   "devDependencies": {
     "stylus": "^0.64.0",
     "vite": "^6.1.6"

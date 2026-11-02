@@ -1,6 +1,6 @@
 {
-  "name": "Pandora Boilerplate",
-  "short_name": "Pandora Boilerplate",
+  "name": "Weather",
+  "short_name": "Weather",
   "icons": [
     {
       "src": "assets/images/favicons/web-app-manifest-192x192.png",
