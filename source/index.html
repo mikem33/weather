@@ -1,28 +1,76 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
-        <meta name="description" content="">
+        <title>Weather</title>
+        <meta name="description" content="Current weather and forecast from Open-Meteo.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/png" href="assets/images/favicons/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="assets/images/favicons/favicon.svg" />
         <link rel="shortcut icon" href="assets/images/favicons/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="Pandora Boilerplate" />
+        <meta name="apple-mobile-web-app-title" content="Weather" />
         <link rel="manifest" href="assets/images/favicons/site.webmanifest" />
         <link rel="stylesheet" href="assets/css/compile/styl/style.styl">
     </head>
     <body>
         <main class="main v-space h-space">
-            <div class="wrapper">
-                <p>Hello world! This is Pandora Boilerplate.</p>
+            <div class="wrapper weather">
+
+                <!-- Loading, missing parameters or fetch errors. Hidden once the forecast is shown. -->
+                <p class="weather-status" role="status" data-state="loading">Loading forecast…</p>
+
+                <!-- Everything below stays hidden until the forecast arrives. -->
+                <section class="now" aria-label="Now" hidden>
+                    <span class="now-icon icon"></span>
+                    <p class="now-temp"></p>
+                    <div class="now-text">
+                        <p class="now-condition"></p>
+                        <p class="now-feels"></p>
+                        <h1 class="now-place"></h1>
+                    </div>
+                </section>
+
+                <dl class="details" hidden>
+                    <div class="detail detail-wind">
+                        <dt class="detail-label">Wind</dt>
+                        <dd class="detail-value"></dd>
+                    </div>
+                    <div class="detail detail-humidity">
+                        <dt class="detail-label">Humidity</dt>
+                        <dd class="detail-value"></dd>
+                    </div>
+                    <div class="detail detail-sunrise">
+                        <dt class="detail-label">Sunrise</dt>
+                        <dd class="detail-value"></dd>
+                    </div>
+                    <div class="detail detail-sunset">
+                        <dt class="detail-label">Sunset</dt>
+                        <dd class="detail-value"></dd>
+                    </div>
+                </dl>
+
+                <section class="hours" aria-labelledby="hours-title" hidden>
+                    <h2 class="hours-title" id="hours-title">Next 24 hours</h2>
+                    <ol class="hours-list"></ol>
+                </section>
+
+                <section class="days" aria-labelledby="days-title" hidden>
+                    <h2 class="days-title" id="days-title">Next 6 days</h2>
+                    <ol class="days-list"></ol>
+                </section>
+
+                <footer class="credit" hidden>
+                    <a class="credit-link" href="https://open-meteo.com/">Data: Open-Meteo</a>
+                    · Updated <time class="credit-time"></time>
+                </footer>
+
             </div>
         </main>
 
         <script type="module" src="assets/javascript/compile/main.js"></script>
-        
+
     </body>
 </html>
