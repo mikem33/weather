@@ -1,80 +1,71 @@
-# pandora-boilerplate
+# weather
 
-A modern **HTML5 Boilerplate** to start your next project with a simple yet powerful development environment.
+A small weather page: the expanded view of the weather dropdown in my desktop bar
+(Quickshell). It shows the same information as the dropdown, from the same source
+([Open-Meteo](https://open-meteo.com/)):
 
-This boilerplate provides a clean separation between your **development files** (in the `source` folder) and **production-ready output** (in the `build` folder). It uses [Stylus](http://stylus-lang.com) for CSS preprocessing and [Vite](https://vitejs.dev) as the modern build tool and dev server.
+- now: icon, temperature, condition, "feels like", place;
+- wind, humidity, sunrise and sunset;
+- the next 24 hours;
+- the next 6 days, with the chance of rain and a min–max bar on one scale for all days.
 
-## Prerequisites
+The browser calls the Open-Meteo API directly; there is no backend.
 
-- **Node.js 22+** (see `.nvmrc` for the pinned version)
-- **npm** or **pnpm** (pnpm recommended for faster installs)
+Based on [pandora-boilerplate](https://github.com/mikem33/pandora-boilerplate) 1.1.6
+(Vite + Stylus).
 
-## Getting Started
+## Usage
 
-1. Install dependencies:
-```bash
-npm install
-# or
-pnpm install
+The place comes from the URL:
+
+```
+https://weather.test/?lat=38.84078&lon=0.10574&place=Dénia&tz=Europe/Madrid
 ```
 
-2. Start the development server:
-```bash
-npm run dev
-# or
-pnpm dev
-```
+| Parameter | Required | Meaning |
+|-----------|----------|---------|
+| `lat`     | yes      | Latitude |
+| `lon`     | yes      | Longitude |
+| `place`   | no       | Name shown on the page (defaults to the coordinates) |
+| `tz`      | no       | IANA time zone (defaults to `auto`) |
 
-The dev server will be available at `http://localhost:5173` by default.
+Without `lat` and `lon` the page asks for them.
 
 ## Development
 
-The development workflow is streamlined with Vite's instant HMR (Hot Module Replacement):
-
-- **CSS Compilation**: Place your `.styl` files in `source/assets/css/` and they'll be automatically compiled to CSS
-- **JavaScript**: Your scripts in `source/assets/javascript/` are bundled and optimized
-- **Live Reload**: Changes are reflected instantly in the browser
-
-### Available Scripts
-
-- `npm run dev` — Start the development server with hot reload
-- `npm run build` — Build the project for production (output in `build/` folder)
-- `npm run preview` — Preview the production build locally
-
-### Custom Hostnames
-
-You can access the dev server from custom hostnames by configuring them in `vite.config.js`. This is useful for testing cross-origin scenarios or accessing the dev server from Docker containers.
-
-## Production Build
-
-When ready to deploy, generate the optimized production build:
+The project runs in a `create-docker` Vite environment: this repo is the `src/` folder of
+`~/Dev/weather`, and pnpm runs inside the `vite` container (its `node_modules` are built
+for Alpine). create-docker's `pnpm` wrapper forwards the commands there, so from this
+folder:
 
 ```bash
-npm run build
+start-docker weather   # start the containers
+pnpm install           # dependencies
+pnpm dev               # dev server, served at https://weather.test (Ctrl+C stops it)
+pnpm build             # production build in build/
+stop-docker weather    # stop the containers
 ```
 
-This will create a `build` folder containing all necessary files ready for deployment.
+Without the wrapper: `docker compose -f ~/Dev/weather/docker-compose.yml exec vite pnpm …`.
 
-## Project Structure
+## Project structure
 
 ```
-pandora-boilerplate/
-├── source/              # Development files
-│   ├── assets/
-│   │   ├── css/        # Stylus files and compiled CSS
-│   │   └── javascript/ # JavaScript files
-│   └── index.html      # Main HTML entry point
-├── build/              # Production build output (generated)
-├── vite.config.js      # Vite configuration
-└── package.json        # Project metadata and scripts
+source/
+├── index.html                      # Markup, with empty containers filled by the script
+└── assets/
+    ├── css/compile/styl/           # Stylus (style.styl is the entry)
+    ├── images/favicons/
+    └── javascript/compile/main.js  # Reads the URL, fetches the forecast, renders it
+build/                              # Production build (generated, not versioned)
+vite.config.js
 ```
 
-## Tech Stack
+## Data
 
-- **Build Tool**: [Vite](https://vitejs.dev) 6.x
-- **CSS Preprocessor**: [Stylus](http://stylus-lang.com) 0.64
-- **Runtime**: Node.js 22+
+Weather data by [Open-Meteo](https://open-meteo.com/), under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The page footer credits it.
 
 ## License
 
-ISC — See package.json for more details
+ISC.

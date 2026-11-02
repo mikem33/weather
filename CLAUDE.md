@@ -10,5 +10,6 @@ Plan and handoff: `~/Projects/Dev Projects/weather/` (`PRD.md`, `HANDOFF.md`), n
 ## Environment
 
 - Runs in the `create-docker` environment at `~/Dev/weather` (this repo is its `src/`);
-  site at `https://weather.test`. Never run `pnpm install` on the host: the `vite`
-  container does it (`docker compose exec vite pnpm …` from `~/Dev/weather`).
+  site at `https://weather.test`. pnpm always runs in the `vite` container: create-docker's
+  `pnpm` wrapper forwards to it from `src/`; without it,
+  `docker compose -f ~/Dev/weather/docker-compose.yml exec vite pnpm …`.
