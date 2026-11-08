@@ -16,7 +16,7 @@ Based on [pandora-boilerplate](https://github.com/mikem33/pandora-boilerplate) 1
 
 ## Usage
 
-The place comes from the URL:
+The desktop bar's dropdown links here with its place in the URL:
 
 ```
 https://weather.test/?lat=38.84078&lon=0.10574&place=Dénia&tz=Europe/Madrid
@@ -24,12 +24,14 @@ https://weather.test/?lat=38.84078&lon=0.10574&place=Dénia&tz=Europe/Madrid
 
 | Parameter | Required | Meaning |
 |-----------|----------|---------|
-| `lat`     | yes      | Latitude |
-| `lon`     | yes      | Longitude |
+| `lat`     | no¹      | Latitude |
+| `lon`     | no¹      | Longitude |
 | `place`   | no       | Name shown on the page (defaults to the coordinates) |
 | `tz`      | no       | IANA time zone (defaults to `auto`) |
 
-Without `lat` and `lon` the page asks for them.
+¹ Without `lat` and `lon` the page asks the browser for your location and names it with
+[Nominatim](https://nominatim.org/) (OpenStreetMap). If you refuse, it fails, or there is
+no answer within 10 seconds, it shows Dénia; a location that arrives later replaces it.
 
 ## Development
 

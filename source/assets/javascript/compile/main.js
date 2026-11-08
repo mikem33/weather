@@ -3,8 +3,16 @@
 // URL (?lat=38.8&lon=0.1118&place=Dénia, optional tz), asks Open-Meteo for the same data
 // as the dropdown (~/Dev/dotfiles/home/.config/waybar/weather.py) and fills the empty
 // containers in index.html. No styling here: only markup, classes and data attributes.
+// Without lat and lon it asks the browser for the visitor's location, names it with
+// Nominatim (OpenStreetMap) and falls back to Dénia if that is refused or takes too long.
 
 const API = 'https://api.open-meteo.com/v1/forecast';
+const REVERSE_API = 'https://nominatim.openstreetmap.org/reverse';
+
+// Shown when there is no place in the URL and geolocation is refused, fails or gets no
+// answer within GEOLOCATION_WAIT.
+const DEFAULT_PLACE = { lat: 38.84078, lon: 0.10574, name: 'Dénia', tz: 'Europe/Madrid' };
+const GEOLOCATION_WAIT = 10_000;
 
 // WMO weather codes -> name (as in weather.py) and day/night emoji.
 // Emoji are a stand-in until the icons become SVGs; every icon carries data-code,
@@ -94,6 +102,49 @@ function readPlace() {
         tz: params.get('tz')?.trim() || 'auto',
     };
 }
+
+// ── location from the browser ──
+
+// Resolves with the position, or null if geolocation is unavailable, refused or fails.
+function locate() {
+    return new Promise((resolve) => {
+        if (!('geolocation' in navigator)) return resolve(null);
+        navigator.geolocation.getCurrentPosition(
+            (position) => resolve(position.coords),
+            (error) => {
+                console.warn('Geolocation:', error.message);
+                resolve(null);
+            },
+            { maximumAge: 10 * 60_000, timeout: GEOLOCATION_WAIT },
+        );
+    });
+}
+
+// The town or city at these coordinates, from Nominatim; the coordinates if it fails.
+async function placeName(lat, lon) {
+    const fallback = `${lat.toFixed(2)}, ${lon.toFixed(2)}`;
+    try {
+        const query = new URLSearchParams({ format: 'jsonv2', lat, lon, zoom: 10 });
+        const response = await fetch(`${REVERSE_API}?${query}`, { signal: AbortSignal.timeout(5000) });
+        if (!response.ok) throw new Error(`Nominatim answered ${response.status}`);
+        const { address = {}, name } = await response.json();
+        return address.city || address.town || address.village || address.municipality
+            || name || fallback;
+    } catch (error) {
+        console.warn(error);
+        return fallback;
+    }
+}
+
+async function geolocatedPlace() {
+    const coords = await locate();
+    if (!coords) return null;
+    const lat = coords.latitude;
+    const lon = coords.longitude;
+    return { lat, lon, name: await placeName(lat, lon), tz: 'auto' };
+}
+
+// ── forecast ──
 
 async function fetchForecast(place) {
     const query = new URLSearchParams({
@@ -217,19 +268,41 @@ function render(d, place) {
     }
 }
 
+// Each load gets a number; only the latest one may render, so a slow earlier request
+// (e.g. Dénia's) never overwrites a later one (the geolocated place).
+let latestLoad = 0;
+
+async function load(place) {
+    const id = ++latestLoad;
+    try {
+        const data = await fetchForecast(place);
+        if (id === latestLoad) render(data, place);
+    } catch (error) {
+        console.error(error);
+        if (id === latestLoad) showStatus('error', 'Couldn’t load the forecast. Try again later.');
+    }
+}
+
 async function main() {
     document.documentElement.classList.replace('no-js', 'js');
     const place = readPlace();
-    if (!place) {
-        showStatus('no-place', 'No place given. Add ?lat=…&lon=…&place=… to the URL.');
-        return;
-    }
-    try {
-        render(await fetchForecast(place), place);
-    } catch (error) {
-        console.error(error);
-        showStatus('error', 'Couldn’t load the forecast. Try again later.');
-    }
+    if (place) return load(place);
+
+    // No place in the URL: ask for the visitor's location. Dénia is shown if that is
+    // refused or fails, or if there is no answer in time (a permission prompt that is
+    // left open never reports back); a position that arrives later still replaces it.
+    showStatus('locating', 'Finding your location…');
+    let fallbackShown = false;
+    const showDefault = () => {
+        if (fallbackShown) return;
+        fallbackShown = true;
+        load(DEFAULT_PLACE);
+    };
+    const timer = setTimeout(showDefault, GEOLOCATION_WAIT);
+    const here = await geolocatedPlace();
+    clearTimeout(timer);
+    if (here) load(here);
+    else showDefault();
 }
 
 main();
