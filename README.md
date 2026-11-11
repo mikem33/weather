@@ -11,7 +11,7 @@ A small weather page: the expanded view of the weather dropdown in my desktop ba
 
 The browser calls the Open-Meteo API directly; there is no backend.
 
-Based on [pandora-boilerplate](https://github.com/mikem33/pandora-boilerplate) 1.1.6
+Based on [pandora-boilerplate](https://github.com/mikem33/pandora-boilerplate) 2.0.0
 (Vite + Stylus).
 
 ## Usage
