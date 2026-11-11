@@ -56,9 +56,9 @@ Without the wrapper: `docker compose -f ~/Dev/weather/docker-compose.yml exec vi
 source/
 ├── index.html                      # Markup, with empty containers filled by the script
 └── assets/
-    ├── css/compile/styl/           # Stylus (style.styl is the entry)
+    ├── css/style.styl              # Stylus entry point (partials in css/styl/)
     ├── images/favicons/
-    └── javascript/compile/main.js  # Reads the URL, fetches the forecast, renders it
+    └── javascript/main.js          # Reads the URL, fetches the forecast, renders it
 build/                              # Production build (generated, not versioned)
 vite.config.js
 ```
