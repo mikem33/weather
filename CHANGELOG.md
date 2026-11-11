@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- The page's style, after the miguelmorera.com design: its palette, self-hosted fonts
+  (Tanker, Rubik, Roboto Mono, Doto, Cherry Bomb One; woff2 only), the miguelmorera logo,
+  a page title and subtitle, and decorative katakana under each section.
+- The next 24 hours run edge to edge of the window, with a scrollbar of their own
+  (`scrollbar.js`): always visible, as wide as the content, draggable, and moved by the
+  mouse wheel; the hours can be dragged with the mouse, and fade into the background at
+  the window's edges.
+- `pnpm release` and `pnpm prod` from pandora-boilerplate (build published on the
+  `prod` branch).
+
+### Changed
+- Relative asset URLs (`base: './'`), so the build works from any folder.
+- The web app manifest points at its icons and uses the page's background colour.
+
 ## [0.1.0] - 2026-11-11
 
 ### Added
