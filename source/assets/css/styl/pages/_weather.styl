@@ -97,8 +97,36 @@
     list-style none
 
 // $Hours
-// One row that scrolls sideways, from edge to edge of the window: time like the post meta, the icon, and the temperature
-// like the post titles. The current hour ("Now") in Neon Blue.
+// The track holds the list and, on the window's edges, fades from the background colour
+// to transparent that hint there is more to scroll: the right one until the list reaches
+// its end, the left one once it has left its start (data-at-* from scrollbar.js). The
+// track is as wide as the wrapper and doesn't scroll, so the fades stay put; their
+// offsets reach the window's edges.
+
+.hours-track
+    position relative
+    &:before,
+    &:after
+        content ''
+        position absolute
+        top 0
+        bottom 0
+        width "clamp(%s, 12vw, %s)" % (rem(64) rem(240))
+        pointer-events none
+        transition opacity $pseudotransition
+    &:before
+        left unquote("calc(50% - 50vw)")
+        background linear-gradient(to right, $oxfordBlue, rgba($oxfordBlue, 0))
+    &:after
+        right unquote("calc(50% - 50vw)")
+        background linear-gradient(to left, $oxfordBlue, rgba($oxfordBlue, 0))
+    &:has(.hours-list[data-at-start="true"]):before,
+    &:has(.hours-list[data-at-end="true"]):after
+        opacity 0
+
+// One row that scrolls sideways, from edge to edge of the window: time like the post
+// meta, the icon, and the temperature like the post titles. The current hour ("Now") in
+// Neon Blue.
 
 .hours-list
     display flex

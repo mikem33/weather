@@ -7,7 +7,8 @@
 // - the vertical mouse wheel scrolls the list sideways until it reaches an end, then
 //   lets the page scroll again.
 // No styling here: the bar gets --thumb-size and --thumb-start (fractions of the track)
-// and data-scrollable; bar and list get data-dragging; the CSS draws the rest.
+// and data-scrollable; the list gets data-at-start and data-at-end; bar and list get
+// data-dragging; the CSS draws the rest.
 
 const LINE_HEIGHT = 40; // px per wheel "line" when the browser reports lines
 const DRAG_THRESHOLD = 5; // px the mouse must move before a press becomes a drag
@@ -21,6 +22,8 @@ export function scrollbar(list, bar) {
         const max = scrollMax();
         const size = list.scrollWidth ? list.clientWidth / list.scrollWidth : 1;
         bar.dataset.scrollable = max > 0;
+        list.dataset.atStart = list.scrollLeft <= 0;
+        list.dataset.atEnd = list.scrollLeft >= max - 1;
         bar.style.setProperty('--thumb-size', size);
         bar.style.setProperty('--thumb-start', max > 0 ? (list.scrollLeft / max) * (1 - size) : 0);
     }
