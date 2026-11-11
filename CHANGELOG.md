@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-11
+
 ### Added
 - The page's style, after the miguelmorera.com design: its palette, self-hosted fonts
   (Tanker, Rubik, Roboto Mono, Doto, Cherry Bomb One; woff2 only), the miguelmorera logo,
@@ -37,5 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project structure from pandora-boilerplate 2.0.0 (Vite + Stylus): entry points at
   `source/assets/css/style.styl` and `source/assets/javascript/main.js`.
 
-[Unreleased]: https://github.com/mikem33/weather/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/mikem33/weather/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/mikem33/weather/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/mikem33/weather/releases/tag/v0.1.0
