@@ -1,0 +1,27 @@
+/* ---------------------------- *\
+
+    $Logo
+
+\*----------------------------- */
+
+// Isotype in Neon Blue and the name in Tanker, as in the design's header (45px, 24px gap).
+
+.logo
+    display inline-flex
+    align-items center
+    gap rem(24)
+    color $white
+    &:visited
+        color $white
+    &-iso
+        width rem(57)
+        height auto
+        flex-shrink 0
+        color $neonBlue
+    &-eye
+        fill $white
+    &-text
+        font-family $tanker
+        font-size "clamp(%s, 2.4vw, %s)" % (rem(32) rem(45))
+        line-height 1
+        text-transform uppercase

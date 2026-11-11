@@ -16,6 +16,18 @@
         <link rel="stylesheet" href="assets/css/style.styl">
     </head>
     <body>
+        <header class="header h-space">
+            <div class="wrapper">
+                <a class="logo" href="https://miguelmorera.com">
+                    <svg class="logo-iso" viewBox="0 0 172 135" width="57" height="44" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><circle class="logo-eye" cx="85.9" cy="35.3" r="29.6"/><path fill="currentColor" d="M85.998 23.171c6.681 0 12.106 5.424 12.106 12.105s-5.425 12.105-12.106 12.105-12.105-5.424-12.105-12.105 5.424-12.105 12.105-12.105zm-6.701 11.246a6.757 6.757 0 016.701-5.904c1.357 0 2.621.402 3.677 1.094a7.604 7.604 0 01-7.296 5.465 7.508 7.508 0 01-3.082-.655z"/><path fill="currentColor" d="M52.797 23.332C57.616 9.971 70.29.294 85.327.006c15.513-.294 28.889 9.489 33.873 23.326 4.704-7.5 12.181-16.33 19.875-21.54 0 0 47.444 43.553 28.427 117.814 0 0-17.59-8.235-28.438-26.925 0 0-4.662 15.498-53.03 43.261v-.082l-.034-.02-.037.02v.082c-48.365-27.763-53.03-43.261-53.03-43.261-10.848 18.69-28.435 26.925-28.435 26.925C-14.521 45.345 32.922 1.792 32.922 1.792c7.693 5.21 15.17 14.04 19.875 21.54zm32.644-17.39c16.191-.308 29.587 12.589 29.895 28.78.307 16.19-12.587 29.586-28.778 29.894-16.194.308-29.59-12.586-29.897-28.777-.308-16.194 12.59-29.59 28.78-29.898v.001z"/></svg>
+                    <span class="logo-text">Miguel Morera</span>
+                </a>
+                <h1 class="heading">Weather for wherever you are</h1>
+                <h2 class="subheading">Current conditions and the forecast for the next 24 hours and 6 days, straight from Open-Meteo.</h2>
+                <p class="katakana" lang="ja" aria-hidden="true">ジャスト・ルック・アウト・オブ・ザ・ウィンドウ</p>
+            </div>
+        </header>
+
         <main class="main v-space h-space">
             <div class="wrapper weather">
 
@@ -27,9 +39,10 @@
                     <span class="now-icon icon"></span>
                     <p class="now-temp"></p>
                     <div class="now-text">
+                        <h2 class="now-place"></h2>
                         <p class="now-condition"></p>
                         <p class="now-feels"></p>
-                        <h1 class="now-place"></h1>
+                        <p class="katakana" lang="ja" aria-hidden="true">アセ・ウン・ティエンポ・デ・ペロス</p>
                     </div>
                 </section>
 
@@ -53,22 +66,26 @@
                 </dl>
 
                 <section class="hours" aria-labelledby="hours-title" hidden>
-                    <h2 class="hours-title" id="hours-title">Next 24 hours</h2>
+                    <h3 class="hours-title" id="hours-title">Next 24 hours</h3>
+                    <p class="katakana" lang="ja" aria-hidden="true">ザ・クラウズ・ディド・ノット・リード・ディス</p>
                     <ol class="hours-list"></ol>
                 </section>
 
                 <section class="days" aria-labelledby="days-title" hidden>
-                    <h2 class="days-title" id="days-title">Next 6 days</h2>
+                    <h3 class="days-title" id="days-title">Next 6 days</h3>
+                    <p class="katakana" lang="ja" aria-hidden="true">マニャーナ・ジョベラ・オ・ノ</p>
                     <ol class="days-list"></ol>
                 </section>
 
-                <footer class="credit" hidden>
-                    <a class="credit-link" href="https://open-meteo.com/">Data: Open-Meteo</a>
-                    · Updated <time class="credit-time"></time>
-                </footer>
-
             </div>
         </main>
+
+        <footer class="credit h-space" hidden>
+            <div class="wrapper">
+                <a class="credit-link" href="https://open-meteo.com/">Data: Open-Meteo</a>
+                · Updated <time class="credit-time"></time>
+            </div>
+        </footer>
 
         <script type="module" src="assets/javascript/main.js"></script>
 

@@ -1,0 +1,194 @@
+/* ---------------------------- *\
+
+    $Weather
+
+\*----------------------------- */
+
+// The page's blocks: now, details, hours, days and credit.
+// Every block starts with the HTML attribute hidden until the forecast arrives, so the
+// display rules go on :not([hidden]) to keep it working.
+
+// $Now
+// Laid out like the design's hero ("HOLA," + "ME LLAMO / MIGUEL MORERA."), at a medium
+// size: the temperature in Tanker and, beside it, the place, the condition and feels like.
+
+.now
+    &:not([hidden])
+        display flex
+        flex-wrap wrap
+        align-items flex-end
+        column-gap rem(32)
+        row-gap rem(16)
+    margin-bottom var(--v-space)
+    p
+        margin-bottom 0
+    &-icon
+        font-size "clamp(%s, 6vw, %s)" % (rem(64) rem(115))
+        line-height 1
+    &-temp
+        font-family $tanker
+        font-size "clamp(%s, 7vw, %s)" % (rem(96) rem(135))
+        line-height .85
+    &-place
+        font-family $tanker
+        font-size "clamp(%s, 3.5vw, %s)" % (rem(40) rem(67))
+        line-height .9
+        margin-bottom 0
+    // Same as the post titles on the design's home: Rubik SemiBold 36/38.
+    &-condition
+        margin-top rem(8)
+        font-family $rubik
+        font-weight 600
+        font-size "clamp(%s, 1.9vw, %s)" % (rem(24) rem(36))
+        line-height 1.05
+        color $neonBlue
+    &-feels
+        margin-top rem(8)
+        font-family $roboto
+        font-size "clamp(%s, 1vw, %s)" % (rem(16) rem(18))
+        color $neonBlue
+
+// $Details
+// Wind, humidity, sunrise and sunset in a row: the label like the design's post meta
+// (Roboto Mono, uppercase, 60% white) and the value like its post titles (Rubik SemiBold).
+// Two columns below 768px.
+
+.details
+    &:not([hidden])
+        display grid
+        grid-template-columns repeat(4, 1fr)
+        gap rem(24)
+        +below(767)
+            grid-template-columns repeat(2, 1fr)
+    margin 0 0 var(--v-space)
+    padding rem(24) 0
+    border-top 1px solid $transparentWhite
+    border-bottom 1px solid $transparentWhite
+
+.detail
+    &-label
+        margin-bottom rem(8)
+        font-family $roboto
+        font-size rem(16)
+        text-transform uppercase
+        color $transparentWhite
+    &-value
+        margin 0
+        font-family $rubik
+        font-weight 600
+        font-size "clamp(%s, 1.9vw, %s)" % (rem(24) rem(36))
+        line-height 1.05
+
+// $Sections
+// Next 24 hours and next 6 days: an h3 title (Tanker, from the global scale) and a list.
+
+.hours,
+.days
+    margin-bottom var(--v-space)
+
+.hours-title,
+.days-title
+    margin-bottom rem(8)
+
+.hours-list,
+.days-list
+    margin 0
+    padding 0
+    list-style none
+
+// $Hours
+// One row that scrolls sideways: time like the post meta, the icon, and the temperature
+// like the post titles. The current hour ("Now") in Neon Blue.
+
+.hours-list
+    display flex
+    gap rem(8)
+    overflow-x auto
+    padding-bottom rem(16)
+    scrollbar-color $transparentWhite transparent
+
+.hour
+    display flex
+    flex-direction column
+    align-items center
+    gap rem(12)
+    flex 0 0 rem(72)
+    padding rem(16) 0
+    font-size inherit
+    &-time
+        font-family $roboto
+        font-size rem(16)
+        text-transform uppercase
+        color $transparentWhite
+    &-icon
+        font-size rem(32)
+        line-height 1
+    &-temp
+        font-weight 600
+        font-size rem(24)
+        line-height 1
+    &-now &-time,
+    &-now &-temp
+        color $neonBlue
+
+// $Days
+// Rows like the design's diary entries, with a separator line: day, icon, chance of rain,
+// min, the min–max bar on one scale for all days, and max. Today in Neon Blue.
+
+.day
+    display grid
+    grid-template-columns rem(112) rem(48) rem(56) rem(48) 1fr rem(48)
+    align-items center
+    column-gap rem(16)
+    padding rem(20) 0
+    font-size inherit
+    border-bottom 1px solid $transparentWhite
+    +below(767)
+        grid-template-columns rem(64) rem(36) rem(44) rem(40) 1fr rem(40)
+        column-gap rem(8)
+    &-name
+        font-weight 600
+        font-size "clamp(%s, 1.9vw, %s)" % (rem(20) rem(28))
+        line-height 1
+    &-today &-name
+        color $neonBlue
+    &-icon
+        font-size rem(32)
+        line-height 1
+        text-align center
+    &-rain
+        font-family $roboto
+        font-size rem(16)
+        color $moonstone
+    &-min,
+    &-max
+        font-weight 600
+        font-size rem(20)
+        line-height 1
+    &-min
+        text-align right
+        color $transparentWhite
+    // The track is the whole scale; the bar is this day's range, placed with the custom
+    // properties the script sets (--range-start, --range-width).
+    &-range
+        position relative
+        height rem(6)
+        border-radius rem(3)
+        background-color rgba($white, .1)
+    &-range-bar
+        position absolute
+        top 0
+        bottom 0
+        left var(--range-start)
+        width var(--range-width)
+        border-radius rem(3)
+        background-color $neonBlue
+
+// $Credit
+// A full-width band like the design's footer: Deep Black, Rubik 16px, the link in Neon Blue.
+
+.credit
+    padding-top rem(32)
+    padding-bottom rem(32)
+    font-size rem(16)
+    background-color $deepBlack

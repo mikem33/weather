@@ -14,8 +14,7 @@ font-url($file)
 webfont($family, $file, $weight = normal, $style = normal)
     @font-face
         font-family $family
-        src url(font-url($file + '.woff2')) format('woff2'),
-            url(font-url($file + '.woff')) format('woff')
+        src url(font-url($file + '.woff2')) format('woff2')
         font-display swap
         font-weight $weight
         font-style $style

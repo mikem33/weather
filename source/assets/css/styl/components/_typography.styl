@@ -4,27 +4,32 @@
 
 \* ---------------------------- */
 
+// Headings are Tanker, uppercase, as in the miguelmorera.com design.
+// Max sizes come from the design at 1920px: 200 (section titles), 135, 45 (logo), 36.
+
 p, li
     font-size "clamp(%s, 1vw, %s)" % (rem(16) rem(18))
 h1, h2, h3, h4, h5, h6
     text-wrap balance
+    font-family $tanker
+    text-transform uppercase
 h1, h2, h3, h4, h5, h6, p
     margin-top 0
 h1, .alpha
-    font-size "clamp(%s, 5vw, %s)" % (rem(35) rem(66))
-    line-height "clamp(%s, 5vw, %s)" % (rem(38) rem(66))
+    font-size "clamp(%s, 10.4vw, %s)" % (rem(64) rem(200))
+    line-height .85
 h2, .beta
-    font-size "clamp(%s, 4vw, %s)" % (rem(30) rem(56))
-    line-height "clamp(%s, 4vw, %s)" % (rem(32) rem(56))
+    font-size "clamp(%s, 7vw, %s)" % (rem(48) rem(135))
+    line-height .85
 h3, .gamma
-    font-size "clamp(%s, 3vw, %s)" % (rem(28) rem(42))
-    line-height "clamp(%s, 3vw, %s)" % (rem(30) rem(42))
+    font-size "clamp(%s, 2.4vw, %s)" % (rem(32) rem(45))
+    line-height 1
 h4, .delta
-    font-size "clamp(%s, 2vw, %s)" % (rem(24) rem(32))
-    line-height "clamp(%s, 2vw, %s)" % (rem(26) rem(32))
+    font-size "clamp(%s, 1.9vw, %s)" % (rem(26) rem(36))
+    line-height 1
 h5, .epsilon
-    font-size "clamp(%s, 2vw, %s)" % (rem(20) rem(24))
-    line-height "clamp(%s, 2vw, %s)" % (rem(24) rem(28))
+    font-size "clamp(%s, 1.5vw, %s)" % (rem(22) rem(28))
+    line-height 1
 h6, .zeta
-    font-size "clamp(%s, 2vw, %s)" % (rem(18) rem(22))
-    line-height "clamp(%s, 2vw, %s)" % (rem(20) rem(26))
+    font-size "clamp(%s, 1.25vw, %s)" % (rem(20) rem(24))
+    line-height 1
