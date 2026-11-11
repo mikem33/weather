@@ -97,15 +97,26 @@
     list-style none
 
 // $Hours
-// One row that scrolls sideways: time like the post meta, the icon, and the temperature
+// One row that scrolls sideways, from edge to edge of the window: time like the post meta, the icon, and the temperature
 // like the post titles. The current hour ("Now") in Neon Blue.
 
 .hours-list
     display flex
     gap rem(8)
     overflow-x auto
-    padding-bottom rem(16)
-    scrollbar-color $transparentWhite transparent
+    // Full bleed: the list spans the whole window and the padding puts the first hour
+    // back in line with the wrapper, so hours are not cut at the wrapper's edges.
+    margin-inline unquote("calc(50% - 50vw)")
+    padding-inline unquote("calc(50vw - 50%)")
+    // The native scrollbar is replaced by .scrollbar (scrollbar.js).
+    scrollbar-width none
+    &::-webkit-scrollbar
+        display none
+    // Draggable with the mouse (scrollbar.js).
+    cursor grab
+    user-select none
+    &[data-dragging]
+        cursor grabbing
 
 .hour
     display flex
@@ -192,3 +203,37 @@
     padding-bottom rem(32)
     font-size rem(16)
     background-color $deepBlack
+
+// $Scrollbar
+// The hours list's own scrollbar (scrollbar.js), as wide as the wrapper: a track like the
+// days' range bars (10% white) with a Neon Blue thumb. The script sets --thumb-size and
+// --thumb-start as fractions of the track.
+
+.scrollbar
+    position relative
+    height rem(6)
+    margin-top rem(16)
+    border-radius rem(3)
+    background-color rgba($white, .1)
+    cursor pointer
+    touch-action none
+    user-select none
+    // A taller invisible hit area, so the thin bar is easy to grab.
+    &:before
+        content ''
+        position absolute
+        inset rem(-8) 0
+    &[data-scrollable="false"]
+        visibility hidden
+    &-thumb
+        position absolute
+        top 0
+        bottom 0
+        left unquote("calc(var(--thumb-start, 0) * 100%)")
+        width unquote("calc(var(--thumb-size, 1) * 100%)")
+        border-radius rem(3)
+        background-color $neonBlue
+        transition background-color $basetransition
+    &:hover &-thumb,
+    &[data-dragging] &-thumb
+        background-color lighten($neonBlue, 15%)

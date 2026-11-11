@@ -6,6 +6,8 @@
 // Without lat and lon it asks the browser for the visitor's location, names it with
 // Nominatim (OpenStreetMap) and falls back to Dénia if that is refused or takes too long.
 
+import { scrollbar } from './scrollbar.js';
+
 const API = 'https://api.open-meteo.com/v1/forecast';
 const REVERSE_API = 'https://nominatim.openstreetmap.org/reverse';
 
@@ -285,6 +287,7 @@ async function load(place) {
 
 async function main() {
     document.documentElement.classList.replace('no-js', 'js');
+    scrollbar($('.hours-list'), $('.hours-scrollbar'));
     const place = readPlace();
     if (place) return load(place);
 
